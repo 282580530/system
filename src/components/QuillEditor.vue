@@ -1,6 +1,6 @@
 <template>
   <div :class="prefixCls">
-    <quill-editor v-model="content" value="1111" ref="myQuillEditor" :options="editorOption"
+    <quill-editor  class="ql-editor-class" v-model="content" value="1111" ref="myQuillEditor" :options="editorOption"
       @change="onEditorChange($event)">
     </quill-editor>
     <input type="file" id="quill-upload" @change="up" hidden />
@@ -13,26 +13,6 @@ import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 
 import { quillEditor } from "vue-quill-editor";
-// 定义工具栏
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"], // toggled buttons
-  ["blockquote", "code-block"],
-
-  [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }], // superscript/subscript
-  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-  [{ direction: "rtl" }], // text direction
-
-  // [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-  // [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-  // [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  // [{ font: [] }],
-  // [{ align: [] }],
-  // ["link", "image", "video"],
-  // ["clean"], // remove formatting button
-];
 //
 export default {
   name: "QuillEditor",
@@ -53,23 +33,27 @@ export default {
   data() {
     return {
       content: null,
-      editorOption: {
-        placeholder: "请输入内容",
-        theme: "snow", // or 'bubble'
+     // 富文本编辑器配置
+    editorOption: {
         modules: {
-          toolbar: {
-            container: toolbarOptions,
-            handlers: {
-              image: function (value) {
-                if (value) {
-                  document.querySelector("#quill-upload").click();
-                } else {
-                  this.quill.format("image", false);
-                }
-              },
-            },
-          },
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
+            ['blockquote', 'code-block'], // 引用  代码块
+            [{ header: 1 }, { header: 2 }], // 1、2 级标题
+            [{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
+            [{ script: 'sub' }, { script: 'super' }], // 上标/下标
+            [{ indent: '-1' }, { indent: '+1' }], // 缩进
+            // [{ direction: 'rtl' }], // 文本方向
+            [{ size: ['12', '14', '16', '18', '20', '22', '24', '28', '32', '36'] }], // 字体大小
+            // [{ header: [1, 2, 3, 4, 5, 6] }], // 标题
+            [{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
+            // [{ font: ['songti'] }], // 字体种类
+            [{ align: [] }], // 对齐方式
+            ['clean'], // 清除文本格式
+            ['image', 'video'] // 链接、图片、视频
+          ]
         },
+        placeholder: '请输入正文'
       },
     };
   },
@@ -132,4 +116,19 @@ export default {
 .ql-editor {
             height: 200px;
         }
+</style>
+
+<style type="text/less"  lang="scss" scoped>
+    .ql-editor-class {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        line-height: 1.42;
+        height: 100%;
+        outline: none;
+        padding: 0 !important;
+        tab-size: 4;
+        -moz-tab-size: 4;
+        text-align: left;
+        word-wrap: break-word;
+    }
 </style>

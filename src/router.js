@@ -29,17 +29,17 @@ const router = new Router({
         {
           path: 'report',
           component: () => import('./views/report'),
-          name:'report'
+          name: 'report'
         },
         {
           path: 'knowledge',
           component: () => import('./views/knowledge'),
-          name:'knowledge'
+          name: 'knowledge'
         },
         {
           path: 'knowledgeList',
           component: () => import('./views/knowledgeList'),
-          name:'knowledgeList'
+          name: 'knowledgeList'
         },
       ]
     },
@@ -50,12 +50,25 @@ const router = new Router({
 // 导航守卫限制路由跳转
 router.beforeEach((to, from, next) => {
   let login = store.state.userHasLogin; //登陸
-  console.log(login, 'login');
+  console.log(login,'login');
   if (to.path === '/login') {
     next()
   }
   if (login) {
-    next()
+    if (to.path == '/index') {
+      if(store.state.userInfo.user == 'IT'){
+        next({
+          path: 'index/report',
+        })
+      } else {
+        next({
+          path: 'index/knowledgeList',
+        })
+      }
+      
+    } else {
+      next()
+    }
   } else {
     next('/login')
   }

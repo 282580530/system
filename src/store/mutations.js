@@ -14,6 +14,7 @@ export default {
 	},
 	[USER_LOGINOUT](state) {
 		removeStore("userInfo");
+		state.userHasLogin = false;
 		state.userInfo = {};
 	},
   	

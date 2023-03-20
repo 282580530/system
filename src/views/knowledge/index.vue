@@ -24,13 +24,13 @@
                         :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple
                         :limit="3" :on-exceed="handleExceed" :file-list="fileList">
                         <el-button size="small" type="primary">点击上传</el-button>
-                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                        <div slot="tip" class="el-upload__tip">支持docx、pdf、jpg、png、mp4格式</div>
                     </el-upload>
                 </el-form-item>
             </el-form>
             <div>
-                <el-button>返回</el-button>
-                <el-button>确定</el-button>
+                <el-button @click="go()">返回</el-button>
+                <el-button @click="go()">确定</el-button>
             </div>
         </div>
 
@@ -46,7 +46,7 @@ export default {
     },
     data() {
         return {
-            fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+            fileList: [],
             list: [{ name: '正常', value: 1 }, { name: '异常', value: 0 }],
             form: {
                 name: '',
@@ -114,6 +114,10 @@ export default {
         },
         beforeRemove(file, fileList) {
             return this.$confirm(`确定移除 ${file.name}？`);
+        },
+        go() {
+            this.$router.push(`/index/knowledgeList`);
+
         }
     }
 }
@@ -128,8 +132,6 @@ export default {
 
     .editor {
         width: 1000px;
-
-        
     }
 }
 
